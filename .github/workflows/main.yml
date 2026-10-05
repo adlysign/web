@@ -1,4 +1,4 @@
-name: Extract w.zip
+name: Extract w.zip to Root
 
 on:
   workflow_dispatch:
@@ -14,17 +14,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Extract w.zip
+      - name: Extract w.zip to root
         run: |
-          rm -rf extracted
-          mkdir -p extracted
-          unzip -o w.zip -d extracted
+          unzip -o w.zip -d .
 
       - name: Commit extracted files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add extracted
-          git commit -m "Extract w.zip" || echo "No changes to commit"
+          git add .
+          git commit -m "Extract w.zip to root" || echo "No changes to commit"
           git push
