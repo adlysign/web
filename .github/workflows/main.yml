@@ -1,0 +1,30 @@
+name: Extract w.zip
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract w.zip
+        run: |
+          rm -rf extracted
+          mkdir -p extracted
+          unzip -o w.zip -d extracted
+
+      - name: Commit extracted files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add extracted
+          git commit -m "Extract w.zip" || echo "No changes to commit"
+          git push
